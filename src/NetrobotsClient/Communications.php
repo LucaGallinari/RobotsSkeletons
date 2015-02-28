@@ -10,6 +10,8 @@ namespace NetrobotsClient;
 
 class Communications
 {
+    const MAX_SPEED = 27;
+
     /**
      * @var string
      */
@@ -18,6 +20,8 @@ class Communications
     private $connection;
 
     private $token = null;
+
+    private $status;
 
     public function __construct($serverAddress, $serverPort)
     {
@@ -71,6 +75,26 @@ class Communications
         $this->token = null;
     }
 
+    /**
+     * Returns the current robot status.
+     *
+     *  name
+     *  hp
+     *  heading
+     *  speed
+     *  x
+     *  y
+     *  dead
+     *  winner
+     *  max_speed
+     *  scanning
+     *  reloading
+     *  bursting
+     *  reloading_timer
+     *
+     * @return \stdClass Current robot status
+     * @throws \Exception
+     */
     public function getStatus()
     {
         $res = $this->doRequest(
@@ -81,13 +105,13 @@ class Communications
             )
         );
 
-        $robot = $res->robot;
+        $this->status = $res->robot;
 
-        if ($robot->dead) {
+        if ($this->status->dead) {
             throw new \Exception('Dead :(');
         }
 
-        return $robot;
+        return $this->status;
     }
 
     public function drive($speed, $heading)
@@ -133,6 +157,20 @@ class Communications
                 ),
             )
         );
+    }
+
+    public function driveTo($x, $y, $speed = self::MAX_SPEED)
+    {
+        $this->x = $x;
+        $this->y = $y;
+
+        $prevTime = null;
+
+        $startX = $this->status->x;
+        $startY = $this->status->y;
+
+        $heading = rad2deg(atan2($y - $startY, $x - $startX));
+        $this->drive($speed, $heading);
     }
 
     /**

@@ -6,7 +6,7 @@
  * Time: 15.49
  */
 
-include 'Communications.php';
+use NetrobotsClient\Communications;
 
-$comm = new Communications();
+$comm = new Communications('192.168.1.13', '8080');
 $comm->deleteRobot($argv[1]);
