@@ -1,0 +1,15 @@
+{
+    "name": "lucagallinari/netrobots-php-client",
+    "authors": [
+        {
+            "name": "Luca Gallinari",
+            "email": "luke.gallinari@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
+}

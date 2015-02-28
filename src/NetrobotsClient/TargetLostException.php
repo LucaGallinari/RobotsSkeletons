@@ -6,7 +6,9 @@
  * Time: 17.16
  */
 
-class TargetLostException extends Exception
+namespace NetrobotsClient;
+
+class TargetLostException extends \Exception
 {
     private $direction;
     private $distance;

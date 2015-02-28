@@ -1,4 +1,6 @@
 <?php
+use NetrobotsClient\Communications;
+
 /**
  * Created by PhpStorm.
  * User: andrea
@@ -8,8 +10,7 @@
  * Skeleton PHP project for creating your personal robot
  */
 
-require_once 'Communications.php';
-require_once 'TargetLostException.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 class Main
 {

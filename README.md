@@ -1,1 +1,3 @@
 # RobotsSkeletons
+
+See _example/main.php_...

@@ -6,6 +6,8 @@
  * Time: 15.24
  */
 
+namespace NetrobotsClient;
+
 class Communications
 {
     /**
@@ -79,7 +81,7 @@ class Communications
         $robot = $res->robot;
 
         if ($robot->dead) {
-            throw new Exception('Dead :(');
+            throw new \Exception('Dead :(');
         }
 
         return $robot;
@@ -132,8 +134,8 @@ class Communications
 
     /**
      * @param array $params
-     * @return stdClass
-     * @throws Exception
+     * @throws \Exception
+     * @return \stdClass
      */
     private function doRequest(array $params)
     {
@@ -142,27 +144,27 @@ class Communications
         $res = curl_exec($this->connection);
 
         if ($res === false) {
-            throw new Exception('Curl error (code: '.curl_errno($this->connection).')');
+            throw new \Exception('Curl error (code: '.curl_errno($this->connection).')');
         }
 
         $httpStatusCode = curl_getinfo($this->connection, CURLINFO_HTTP_CODE);
 
         if ($httpStatusCode !== 200) {
-            throw new Exception("Http error received ($httpStatusCode). Body: $res", $httpStatusCode);
+            throw new \Exception("Http error received ($httpStatusCode). Body: $res", $httpStatusCode);
         }
 
         if (!$res) {
-            throw new Exception('Unknown error in request!');
+            throw new \Exception('Unknown error in request!');
         }
 
         $resObject = json_decode($res);
 
         if (!$resObject) {
-            throw new Exception("Could not decode json $res");
+            throw new \Exception("Could not decode json $res");
         }
 
         if ($resObject->status !== 'OK') {
-            throw new Exception("Not ok");
+            throw new \Exception("Not ok");
         }
 
         return $resObject;
