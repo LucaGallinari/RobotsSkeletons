@@ -8,9 +8,6 @@
 
 class Communications
 {
-    const SERVER_ADDR = '129.168.1.13';
-    const SERVER_PORT = '8080';
-
     /**
      * @var string
      */
@@ -20,14 +17,29 @@ class Communications
 
     private $token = null;
 
-    public function __construct()
+    private $defaultConfig = array (
+        'name' => 'Skeleton',
+        'max_hit_points' => null,           // 100
+        'max_speed' => null,                // 27
+        'acceleration' => null,             // 5
+        'decelleration' => null,            // -5
+        'max_sterling_speed' => null,       // 12
+        'max_scan_distance' => null,        // 700
+        'max_fire_distance' => null,        // 700
+        'bullet_speed' => null,             // 500
+        'bullet_damage' => null,            // ..
+        'reloading_time' => null            // 2
+    );
+
+    public function __construct($serverAddress, $serverPort)
     {
-        $this->server = 'http://'.self::SERVER_ADDR.':'.self::SERVER_PORT.'/v1/';
+        $this->server = 'http://'. $serverAddress .':'. $serverPort .'/v1/';
         $this->connection = curl_init();
     }
 
-    public function createRobot($config)
+    public function createRobot(array $config = array())
     {
+        $config = array_merge($this->defaultConfig, $config);
         $res = $this->doRequest(
             array(
                 CURLOPT_RETURNTRANSFER => 1,

@@ -17,25 +17,10 @@ class Main
     private $comm = null;
     private $status;
 
-    private $config = array (
-        'name' => 'Skeleton',
-        'max_hit_points' => null,           // 100
-        'max_speed' => null,                // 27
-        'acceleration' => null,             // 5
-        'decelleration' => null,            // -5
-        'max_sterling_speed' => null,       // 12
-        'max_scan_distance' => null,        // 700
-        'max_fire_distance' => null,        // 700
-        'bullet_speed' => null,             // 500
-        'bullet_damage' => null,            // ..
-        'reloading_time' => null            // 2
-    );
-
     public function run()
     {
-
-        $this->comm = new Communications();
-        $this->comm->createRobot($this->config);
+        $this->comm = new Communications('192.168.1.13', '8080');
+        $this->comm->createRobot();
         echo "ciao";
         try {
             while (true) {
