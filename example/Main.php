@@ -21,7 +21,7 @@ class Main
     public function run()
     {
         $this->comm = new Communications('192.168.1.13', '8080');
-        $this->comm->createRobot();
+        $this->comm->createRobot('Main!');
         echo "ciao";
         try {
             while (true) {

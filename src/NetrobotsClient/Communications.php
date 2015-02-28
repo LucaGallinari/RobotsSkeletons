@@ -19,29 +19,32 @@ class Communications
 
     private $token = null;
 
-    private $defaultConfig = array (
-        'name' => 'Skeleton',
-        'max_hit_points' => null,           // 100
-        'max_speed' => null,                // 27
-        'acceleration' => null,             // 5
-        'decelleration' => null,            // -5
-        'max_sterling_speed' => null,       // 12
-        'max_scan_distance' => null,        // 700
-        'max_fire_distance' => null,        // 700
-        'bullet_speed' => null,             // 500
-        'bullet_damage' => null,            // ..
-        'reloading_time' => null            // 2
-    );
-
     public function __construct($serverAddress, $serverPort)
     {
         $this->server = 'http://'. $serverAddress .':'. $serverPort .'/v1/';
         $this->connection = curl_init();
     }
 
-    public function createRobot(array $config = array())
+    /**
+     * Default config is the following.
+     *
+     *  'max_hit_points' => 100
+     *  'max_speed' => 27
+     *  'acceleration' => 5
+     *  'decelleration' => -5
+     *  'max_sterling_speed' => 12
+     *  'max_scan_distance' => 700
+     *  'max_fire_distance' => 700
+     *  'bullet_speed' => 500
+     *  'bullet_damage' => (40, 3); (20, 2); (5, 5)
+     *  'reloading_time' => 2
+     *
+     * @param $name
+     */
+    public function createRobot($name)
     {
-        $config = array_merge($this->defaultConfig, $config);
+        $config = array();
+        $config['name'] = $name;
         $res = $this->doRequest(
             array(
                 CURLOPT_RETURNTRANSFER => 1,
